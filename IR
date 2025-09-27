@@ -24,3 +24,162 @@ user:user1
 pass:C1sc0123
 
 208.8.8.144/24 (ip add mo)
+
+
+!@Login to Server
+Go to Service MGMT
+Admin -> Queues
+
+!@These are the Qs:
+
+🔹 Tier 1 – Alert Analyst (Frontline / Monitoring & Triage)
+Role: First line of defense.
+Responsibilities:
+Monitor SIEM dashboards, EDR, and other alerting tools.
+Triage incoming alerts: validate false positives vs real threats.
+Document and escalate incidents as needed.
+Skills: Basic understanding of security concepts, logs, and common threats (e.g., phishing, malware, brute force).
+
+🔹 Tier 2 – Incident Responder (Investigation & Escalation)
+Role: Handles alerts escalated by Tier 1.
+
+Responsibilities:
+Perform deep-dive analysis on suspicious activity.
+Correlate data across logs, endpoints, and network tools.
+Contain threats (e.g., isolate machines, reset credentials).
+Work closely with IT for remediation.
+Skills: Strong forensic, networking, and incident response skills; familiarity with threat actor TTPs.
+
+🔹 Tier 3 – Threat Hunter / Forensics Expert
+Role: Proactive defender.
+Responsibilities:
+Hunt for undetected threats using advanced tools and hypotheses.
+Perform forensic analysis (disk, memory, packet captures).
+Reverse engineer malware if needed.
+Improve detection rules (e.g., SIEM tuning, custom YARA/Sigma rules).
+Skills: Deep threat intelligence, malware analysis, scripting (Python/PowerShell), MITRE ATT&CK knowledge.
+
+🔹 Tier 4 – SOC Engineer / Architect
+Role: Builds and maintains the SOC infrastructure.
+Responsibilities:
+Manage and tune SIEM, SOAR, EDR, IDS/IPS, etc.
+Automate workflows (e.g., using SOAR platforms).
+Ensure log sources are correctly ingested and parsed.
+Work with DevOps or Cloud teams to secure cloud/SaaS assets.
+Skills: Systems integration, scripting/automation, architecture, security tools engineering.
+
+🔹 Tier 5 – SOC Manager / CISO / Threat Intelligence Lead
+Role: Strategic leadership and oversight.
+Responsibilities:
+Oversee all SOC operations and KPIs (MTTD, MTTR, etc.).
+Communicate risks and incidents to executive leadership.
+Set policies, compliance alignment (e.g., ISO, NIST, GDPR).
+Coordinate red team/blue team exercises.
+Manage threat intelligence program and liaise with external agencies.
+Skills: Leadership, governance, threat intelligence, legal/compliance knowledge, executive communication.
+
+
+!@Add Priorities:
+Noted
+Very Low
+Low 
+Normal
+High
+Very High
+
+!@Add SLA:
+
+🔹 1. MTTD – Mean Time to Detect
+Description: The average time it takes from the occurrence of a security event to its detection by the SOC.
+Purpose: Measures how fast threats are identified by the monitoring systems (SIEM, EDR, IDS).
+Typical SLA Time:
+High/Critical: ≤ 15 minutes
+Medium/Low: ≤ 30–60 minutes
+
+🔹 2. MTTA – Mean Time to Acknowledge / Triage
+Description: The time from when an alert or incident is raised to when a SOC analyst acknowledges and begins triaging it.
+Purpose: Ensures the SOC is actively responding to alerts in a timely fashion.
+Typical SLA Time:
+Critical alerts: ≤ 15 minutes
+All other alerts: ≤ 30 minutes
+
+🔹 3. MTTR – Mean Time to Respond / Resolve
+Description: The average time to fully contain, eradicate, and recover from a security incident after detection.
+Purpose: Measures SOC efficiency in remediating threats.
+Typical SLA Time:
+
+Critical incidents: ≤ 240 minutes (4 hours)
+High: ≤ 480 minutes (8 hours)
+Medium/Low: ≤ 1–3 business days
+
+🔹 4. Threat Notification SLA
+Description: Timeframe within which stakeholders (e.g., CISO, IT, legal) must be notified after confirmation of a security incident.
+Purpose: Ensures timely escalation and compliance with regulatory timelines (e.g., GDPR, HIPAA).
+Typical SLA Time:
+Confirmed breach or critical incident: ≤ 60 minutes
+Other security events: ≤ 120 minutes
+
+🔹 5. Reporting SLA
+Description: Defines the frequency and timeliness of SOC reports (incident summaries, threat intel, KPI dashboards).
+Purpose: Maintains transparency, accountability, and regulatory compliance.
+Typical SLA Time:
+Daily report of critical incidents: by end of business day (EOD)
+Weekly incident summary: within Monday 12:00 PM
+Monthly executive report: by the 3rd business day of each month
+
+!@Add Types of ticket:
+
+1. Phishing Email Reports
+Description: Users report suspicious emails that may contain malicious links or attachments. These emails often impersonate legitimate services or internal contacts.
+SOC Task: Analyze the email headers, URLs, and attachments; sandbox suspicious content; block the sender or domain; educate the user.
+
+2. Endpoint Malware Detection
+Description: Antivirus or EDR solutions detect malware (e.g., Trojans, ransomware, adware) on user endpoints.
+SOC Task: Investigate the detection; isolate the device if necessary; analyze the malware behavior; initiate remediation steps.
+
+3. Suspicious Login Activity
+Description: Unusual or impossible logins (e.g., logins from different countries within minutes) are flagged by the SIEM or IAM solution.
+SOC Task: Verify if login is legitimate or compromised; reset credentials; analyze source IP and geolocation; apply MFA if not enabled.
+
+4. Unusual Network Traffic
+Description: High-volume outbound traffic, traffic to known malicious IPs, or protocol misuse (e.g., DNS tunneling) is detected by IDS/IPS.
+SOC Task: Investigate traffic source; correlate with endpoint behavior; block IP or domain; escalate if part of a larger incident.
+
+5. Vulnerability Scan Alerts
+Description: Scheduled or ad-hoc vulnerability scans detect unpatched systems or open ports that shouldn’t be exposed.
+SOC Task: Confirm asset ownership; prioritize remediation with IT; track patching; escalate high-severity CVEs.
+
+6. Data Loss Prevention (DLP) Alerts
+Description: Alerts are generated when sensitive data (e.g., PII, PCI) is being sent out of the network or copied to USB/storage devices.
+SOC Task: Review content and context; determine if action was authorized; escalate data exfiltration attempts.
+
+7. Unauthorized Application Execution
+Description: Execution of non-approved or blacklisted applications (e.g., Tor, Mimikatz, crypto miners) on endpoints.
+SOC Task: Investigate execution context; isolate host; perform memory/disk forensics if needed; enforce application control policies.
+
+8. Firewall/IPS Blocked Connection Attempts
+Description: Repeated attempts to access blocked ports, services, or IPs (often probing or scanning).
+SOC Task: Identify source; check if internal or external; assess whether part of a larger campaign; report to threat intel team.
+
+9. Account Lockouts / Brute Force Attempts
+Description: Multiple failed login attempts leading to account lockouts, often indicating password guessing or brute-force attempts.
+SOC Task: Correlate with login logs; identify attack source; block IPs; reset affected accounts; enforce account lockout policies.
+
+10. Insider Threat / Privilege Abuse
+Description: Excessive access to files, unusual hours of activity, or accessing data not relevant to the user’s role.
+SOC Task: Audit access logs; check for previous behavioral patterns; alert HR or Legal if needed; limit user privileges.
+
+
+!@Add Agent
+Name
+Email
+User 
+Pass
+
+!@Add Customer
+Customer ID
+Customer Name
+URL
+
+!@Edit Customer Services
+
