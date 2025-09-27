@@ -1,0 +1,26 @@
+Loging for VM
+Login: root
+Pass: C1sc0123
+
+Get the IP Add
+
+!@SOC-IR
+ip -4 addr
+
+!@EDGE WEB
+Odoo Web
+http://208.8.8.144:8069
+user:itil@rivanschool.com
+pass:C1sc0123
+
+Service Management
+http://208.8.8.144/otrs/index.pl
+user:root@localhost
+pass:C1sc0123
+
+Customer Management
+http://208.8.8.144/otrs/customer.pl
+user:user1
+pass:C1sc0123
+
+208.8.8.144/24 (ip add mo)
